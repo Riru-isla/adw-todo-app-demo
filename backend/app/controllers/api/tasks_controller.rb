@@ -12,6 +12,7 @@ class Api::TasksController < ApplicationController
     task = Task.new(task_params)
 
     if task.save
+      ActionCable.server.broadcast("tasks", { action: "created", task: task.as_json })
       render json: task, status: :created
     else
       render json: { errors: task.errors.full_messages }, status: :unprocessable_entity
@@ -23,6 +24,7 @@ class Api::TasksController < ApplicationController
     task = Task.find(params[:id])
 
     if task.update(task_params)
+      ActionCable.server.broadcast("tasks", { action: "updated", task: task.as_json })
       render json: task, status: :ok
     else
       render json: { errors: task.errors.full_messages }, status: :unprocessable_entity
