@@ -22,3 +22,10 @@ Este documento te ayuda a determinar que documentacion deberias leer en funcion 
     - Cuando trabajes con cualquier cosa bajo frontend/
     - Cuando necesites saber como arrancar o testear la aplicacion React
     - Cuando trabajes con componentes, servicios o estilos del frontend
+
+- app_docs/feature-4-action-cable-realtime.md
+  - Condiciones:
+    - Cuando trabajes con Action Cable o WebSockets en backend o frontend
+    - Cuando implementes actualizaciones en tiempo real o broadcasting de eventos
+    - Cuando resuelvas problemas de sincronizacion entre multiples clientes
+    - Cuando añadas nuevos tipos de broadcast (ej: destroy) al canal de tareas

@@ -1,0 +1,11 @@
+# Conditional Documentation
+
+Este fichero ayuda a los desarrolladores a identificar qué documentación leer según el contexto de su trabajo.
+
+## Entradas
+
+- app_docs/feature-2-delete-task-confirmation.md
+  - Condiciones:
+    - Cuando se trabaje con el componente `TaskItem` o el flujo de eliminación de tareas
+    - Cuando se implemente confirmación de acciones destructivas en la UI
+    - Cuando se resuelvan problemas relacionados con diálogos modales o el elemento `<dialog>` nativo

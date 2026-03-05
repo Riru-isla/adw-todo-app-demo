@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import TaskForm from './components/TaskForm'
 import TaskList from './components/TaskList'
 import { fetchTasks, createTask, updateTask, deleteTask, reorderTasks } from './services/api'
+import consumer from './services/cable'
 
 function App() {
   const [tasks, setTasks] = useState([])
@@ -9,6 +10,24 @@ function App() {
   // Cargar tareas al montar el componente
   useEffect(() => {
     loadTasks()
+  }, [])
+
+  // Suscribirse al canal de Action Cable
+  useEffect(() => {
+    const subscription = consumer.subscriptions.create('TasksChannel', {
+      received(data) {
+        if (data.action === 'created') {
+          setTasks(prev => {
+            if (prev.some(t => t.id === data.task.id)) return prev
+            return [...prev, data.task]
+          })
+        } else if (data.action === 'updated') {
+          setTasks(prev => prev.map(t => t.id === data.task.id ? data.task : t))
+        }
+      }
+    })
+
+    return () => subscription.unsubscribe()
   }, [])
 
   const loadTasks = async () => {
