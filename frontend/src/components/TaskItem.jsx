@@ -1,7 +1,9 @@
+import { useRef } from 'react'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 
 function TaskItem({ task, onToggle, onDelete }) {
+  const dialogRef = useRef(null)
   const {
     attributes,
     listeners,
@@ -34,11 +36,28 @@ function TaskItem({ task, onToggle, onDelete }) {
         {task.title}
       </span>
       <button
-        onClick={() => onDelete(task.id)}
+        onClick={() => dialogRef.current.showModal()}
         className="btn btn-delete"
       >
         Eliminar
       </button>
+      <dialog ref={dialogRef} className="confirm-dialog">
+        <p>¿Estás seguro de que deseas eliminar esta tarea?</p>
+        <div className="confirm-dialog-actions">
+          <button
+            onClick={() => dialogRef.current.close()}
+            className="btn btn-cancel"
+          >
+            Cancelar
+          </button>
+          <button
+            onClick={() => { onDelete(task.id); dialogRef.current.close() }}
+            className="btn btn-delete"
+          >
+            Eliminar
+          </button>
+        </div>
+      </dialog>
     </div>
   )
 }
